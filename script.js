@@ -36,3 +36,27 @@ function playRound(playerChoice, computerChoice) {
     return outcome;
 }
 
+function game() {
+    /* Play 5 rounds */
+    let winTally = 0;
+    for (let i = 0; i < 5; i++) {
+        switch (playRound(getPlayerChoice(), getComputerChoice())) {
+            case 'win':
+                ++winTally;
+                break
+            case 'lose':
+                --winTally;
+                break
+        };        
+    }
+    /* Check final result */
+    if (winTally > 0) {
+        console.log(`You win by ${winTally} points!`);
+    } else if (winTally < 0) {
+        console.log(`You lose by ${winTally} points.`);
+    } else if (winTally == 0) {
+        console.log(`It's a draw.`);
+    } else {
+        throw `winTally has an invalid value of ${winTally}`
+    }
+}
