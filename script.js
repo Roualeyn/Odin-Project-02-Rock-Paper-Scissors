@@ -1,3 +1,4 @@
+// Declare Functions
 function getComputerChoice() {
     switch(Math.floor(Math.random() * 3)) {
         case 0:
@@ -11,13 +12,10 @@ function getComputerChoice() {
     }
 }
 
-function getPlayerChoice() {
-    let choice = prompt("Choose Rock, Paper, or Scissors");
-    return choice.toLowerCase();
-}
-
-function playRound(playerChoice, computerChoice) {
-    let outcome = "lose";
+function playRound() {
+    const playerChoice = this.id;
+    const computerChoice = getComputerChoice();
+    let outcome = "draw";
     let winner;
     let loser;
     if ((playerChoice == "rock" && computerChoice == "paper") || (playerChoice == "paper" && computerChoice == "rock") || (playerChoice == "scissors" && computerChoice == "paper")) {
@@ -30,33 +28,59 @@ function playRound(playerChoice, computerChoice) {
         loser = playerChoice;
     } else {
         console.log(`It's a draw! Both players used ${playerChoice}.`)
-        return 'draw';
+        changeStatusBar(playerChoice, computerChoice, outcome);
+        return;
     }
     console.log(`You ${outcome}! ${winner} beats ${loser}.`)
-    return outcome;
+    changeStatusBar(playerChoice, computerChoice, outcome);
 }
 
-function game() {
-    /* Play 5 rounds */
-    let winTally = 0;
-    for (let i = 0; i < 5; i++) {
-        switch (playRound(getPlayerChoice(), getComputerChoice())) {
-            case 'win':
-                ++winTally;
-                break
-            case 'lose':
-                --winTally;
-                break
-        };        
+function changeStatusBar(playerChoice, computerChoice, outcome){
+    // Set Player Icon
+    document.querySelector("#player-choice").src = `./images/${playerChoice}.jpg`;
+    // Set Computer Icon
+    document.querySelector("#computer-choice").src = `./images/${computerChoice}.jpg`;
+
+    // Main Logic
+    switch(outcome){
+        case "lose":
+            document.querySelector("#status").innerText = "loses to";
+            // Increase Computer Score
+            const computerScore = document.querySelector("#computer-score");
+            computerScore.innerText = Number(computerScore.innerText) + 1;
+            break;
+        case "win":
+            document.querySelector("#status").innerText = "beats";
+            // Increase Player Score
+            const playerScore = document.querySelector("#player-score");
+            playerScore.innerText = Number(playerScore.innerText) + 1;
+            break;
+        case "draw":
+            document.querySelector("#status").innerText = "ties with";
+            break;
+        default:
+            throw "Round has no outcome";    
     }
-    /* Check final result */
-    if (winTally > 0) {
-        console.log(`You win by ${winTally} points!`);
-    } else if (winTally < 0) {
-        console.log(`You lose by ${winTally} points.`);
-    } else if (winTally == 0) {
-        console.log(`It's a draw.`);
-    } else {
-        throw `winTally has an invalid value of ${winTally}`
+
+    // Update Round Number
+    const round = document.querySelector("#round");
+    round.innerText = Number(round.innerText) + 1;
+    if (round.innerText == 6) {
+        endGame();
     }
+
 }
+
+function endGame(){
+    // Requires Functionality
+    console.log("Game Ends")
+}
+
+
+// Initialise Listeners
+rockButton = document.querySelector("#rock");
+paperButton = document.querySelector("#paper");
+scissorsButton = document.querySelector("#scissors");
+rockButton.addEventListener('click', playRound);
+paperButton.addEventListener('click', playRound);
+scissorsButton.addEventListener('click', playRound);
