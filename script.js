@@ -18,7 +18,7 @@ function playRound() {
     let outcome = "draw";
     let winner;
     let loser;
-    if ((playerChoice == "rock" && computerChoice == "paper") || (playerChoice == "paper" && computerChoice == "rock") || (playerChoice == "scissors" && computerChoice == "paper")) {
+    if ((playerChoice == "rock" && computerChoice == "scissors") || (playerChoice == "paper" && computerChoice == "rock") || (playerChoice == "scissors" && computerChoice == "paper")) {
         outcome = "win";
         winner = playerChoice;
         loser = computerChoice;
