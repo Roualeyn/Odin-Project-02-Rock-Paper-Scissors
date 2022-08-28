@@ -37,48 +37,41 @@ function playRound() {
 
 function changeStatusBar(playerChoice, computerChoice, outcome){
     // Set Player Icon
-    document.querySelector("#player-choice").src = `./images/${playerChoice}.jpg`;
+    scoreBoard.playerImg.src = `./images/${playerChoice}.jpg`;
     // Set Computer Icon
-    document.querySelector("#computer-choice").src = `./images/${computerChoice}.jpg`;
+    scoreBoard.computerImg.src = `./images/${computerChoice}.jpg`;
 
     // Main Logic
     switch(outcome){
         case "lose":
             document.querySelector("#status").innerText = "loses to";
             // Increase Computer Score
-            const computerScore = document.querySelector("#computer-score");
-            computerScore.innerText = Number(computerScore.innerText) + 1;
+            scoreBoard.computerScoreHTML.innerText = ++scoreBoard.computerScore;
             break;
         case "win":
             document.querySelector("#status").innerText = "beats";
             // Increase Player Score
-            const playerScore = document.querySelector("#player-score");
-            playerScore.innerText = Number(playerScore.innerText) + 1;
+            scoreBoard.playerScoreHTML.innerText = ++scoreBoard.playerScore;
             break;
         case "draw":
             document.querySelector("#status").innerText = "ties with";
             break;
         default:
-            throw "Round has no outcome";    
+            throw "Round has no outcome";
     }
 
     // Update Round Number
-    const round = document.querySelector("#round");
-    round.innerText = Number(round.innerText) + 1;
-    if (round.innerText == 6) {
-        endGame();
-    }
-    }
+    scoreBoard.roundHTML.innerText = ++scoreBoard.round;
+    if (round.innerText > 5) endGame();
+}
 
 function endGame(){
     // Update Second Header
-    const playerScore = document.querySelector("#player-score").innerText;
-    const computerScore = document.querySelector("#computer-score").innerText;
-    if (playerScore > computerScore) {
+    if (scoreBoard.playerScore > scoreBoard.computerScore) {
         document.querySelector("h2").innerHTML = "You win!";
-    } else if (playerScore < computerScore) {
+    } else if (scoreBoard.playerScore < scoreBoard.computerScore) {
         document.querySelector("h2").innerHTML = "You lose";
-    } else if (playerScore == computerScore) {
+    } else if (scoreBoard.playerScore == scoreBoard.computerScore) {
         document.querySelector("h2").innerHTML = "It's a tie";
     } else throw "Invalid Final Score";
     
@@ -96,4 +89,15 @@ const scissorsButton = document.querySelector("#scissors");
 rockButton.addEventListener('click', playRound);
 paperButton.addEventListener('click', playRound);
 scissorsButton.addEventListener('click', playRound);
+
+const scoreBoard = {
+    playerScore: 0,
+    computerScore: 0,
+    playerScoreHTML: document.querySelector("#player-score"),
+    computerScoreHTML: document.querySelector("#computer-score"),
+    round: 0,
+    roundHTML: document.querySelector("#round"),
+    playerImg: document.querySelector("#player-choice"),
+    computerImg: document.querySelector("#computer-choice")
+};
 
