@@ -76,7 +76,7 @@ function endGame(){
     const computerScore = document.querySelector("#computer-score").innerText;
     if (playerScore > computerScore) {
         document.querySelector("h2").innerHTML = "You win!";
-    } else if (playerScore < playerChoice) {
+    } else if (playerScore < computerScore) {
         document.querySelector("h2").innerHTML = "You lose";
     } else if (playerScore == computerScore) {
         document.querySelector("h2").innerHTML = "It's a tie";
