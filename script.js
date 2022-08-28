@@ -68,19 +68,32 @@ function changeStatusBar(playerChoice, computerChoice, outcome){
     if (round.innerText == 6) {
         endGame();
     }
-
-}
+    }
 
 function endGame(){
-    // Requires Functionality
-    console.log("Game Ends")
+    // Update Second Header
+    const playerScore = document.querySelector("#player-score").innerText;
+    const computerScore = document.querySelector("#computer-score").innerText;
+    if (playerScore > computerScore) {
+        document.querySelector("h2").innerHTML = "You win!";
+    } else if (playerScore < playerChoice) {
+        document.querySelector("h2").innerHTML = "You lose";
+    } else if (playerScore == computerScore) {
+        document.querySelector("h2").innerHTML = "It's a tie";
+    } else throw "Invalid Final Score";
+    
+    // Disable Buttons
+    rockButton.removeEventListener('click', playRound);
+    paperButton.removeEventListener('click', playRound);
+    scissorsButton.removeEventListener('click', playRound);    
 }
 
 
 // Initialise Listeners
-rockButton = document.querySelector("#rock");
-paperButton = document.querySelector("#paper");
-scissorsButton = document.querySelector("#scissors");
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
 rockButton.addEventListener('click', playRound);
 paperButton.addEventListener('click', playRound);
 scissorsButton.addEventListener('click', playRound);
+
